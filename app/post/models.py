@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Avg, Count
+from django.db.models import Avg
 
 from account.models import Author
 
@@ -10,12 +10,18 @@ class Post(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     avg_rating = models.FloatField(default=0.0)
 
+    # def get_rating(self):
+    #     scores = PostRating.objects.filter(post=self) \
+    #         .aggregate(avg=Avg('rating'))
+    #     self.avg_rating = scores.get('avg')
+    #     # for i in scores:
+    #     #     self.avg_rating[i['rating']] = i['avg']
+    #     return self.avg_rating
+
     def get_rating(self):
         scores = PostRating.objects.filter(post=self) \
-            .aggregate(avg=Avg('rating'))
-        self.avg_rating = scores.get('avg')
-        # for i in scores:
-        #     self.avg_rating[i['rating']] = i['avg']
+            .aggregate(Avg('rating'))
+        self.avg_rating = scores['rating__avg'] or 0.0
         return self.avg_rating
 
 

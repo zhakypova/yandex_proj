@@ -1,7 +1,10 @@
 /venv
 .idea/
 **/__pycache__/
-**/migrations
+#**/migrations
 .env.dev
-db.sqlite3
+.env.prod
+.env.prod.db
+#db.sqlite3
 app/entrypoint.sh
+app/entrypoint.prod.sh

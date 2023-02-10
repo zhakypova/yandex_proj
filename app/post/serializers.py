@@ -4,10 +4,15 @@ from .models import Post, Comment, Rating, PostRating
 
 
 class PostSerializer(serializers.ModelSerializer):
+    avg_rating = serializers.FloatField(read_only=True)
     class Meta:
         model = Post
         fields = '__all__'
         read_only_fields = ['avg_rating', 'author']
+
+    def create(self, validated_data):
+        rating = Post(avg_rating=validated_data['avg_rating'],)
+        rating.save()
 
 
 
@@ -31,3 +36,5 @@ class PostRatingSerializer(serializers.ModelSerializer):
         model = PostRating
         fields = '__all__'
         read_only_fields = ['author', 'post']
+
+
