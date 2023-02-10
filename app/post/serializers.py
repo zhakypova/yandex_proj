@@ -10,11 +10,9 @@ class PostSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ['avg_rating', 'author']
 
-    def create(self, validated_data):
-        rating = Post(avg_rating=validated_data['avg_rating'],)
-        rating.save()
-
-
+    # def create(self, validated_data):
+    #     rating = Post(avg_rating=validated_data['avg_rating'],)
+    #     rating.save()
 
 
 class CommentSerializer(serializers.ModelSerializer):
